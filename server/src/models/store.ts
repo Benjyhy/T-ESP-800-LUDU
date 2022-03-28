@@ -6,8 +6,6 @@ import {
     Required,
   } from "@tsed/schema";
   import { Model, ObjectID, Ref } from "@tsed/mongoose";
-  
-  const phone_regex : string = "^(0|\+33 )[1-9]([-. ]?[0-9]{2} ){3}([-. ]?[0-9]{2})$";
 
   @Model()
   export class Store {
@@ -23,7 +21,7 @@ import {
     @Required()
     owner: string;
 
-    @Pattern(phone_regex)
+    @Pattern(/^(((\+33\s)|0)[1-9]\s([0-9][0-9]\s){4})$/)
     @Required()
     phone: number;
 

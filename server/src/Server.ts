@@ -16,13 +16,14 @@ import { paths } from "./path";
 const mongoConfig = {
   mongoose: [
     {
-      id: "default", // Recommended: define default connection. All models without dbName will be assigned to this connection
-      url: `mongodb://127.0.0.1:${process.env.MONGO_PORT}/ludu`,
+      id: "default",
+      url: `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@127.0.0.1:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`,
       connectionOptions: {},
     },
   ],
 };
 
+console.log(mongoConfig.mongoose[0].url)
 @Configuration({
   ...config,
   ...mongoConfig,

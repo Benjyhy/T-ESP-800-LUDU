@@ -7,7 +7,9 @@ async function bootstrap() {
     const platform = await PlatformExpress.bootstrap(Server);
     await platform.listen();
 
-    process.on("SIGINT", () => {
+    process.on("SIGINT", () => 
+    {
+      console.log(" plateform.stop")
       platform.stop();
     });
   } catch (error) {
