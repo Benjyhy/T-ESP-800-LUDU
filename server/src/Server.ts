@@ -17,7 +17,7 @@ const mongoConfig = {
   mongoose: [
     {
       id: "default",
-      url: `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@127.0.0.1:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`,
+      url: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@cluster0.lyfb9.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
       connectionOptions: {},
     },
   ],
