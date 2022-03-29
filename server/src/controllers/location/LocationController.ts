@@ -29,7 +29,7 @@ export class LocationController {
     type: Location,
     collectionType: Array,
   })
-  async getAllLocation(): Promise<Location[] | null> {
+  async getAllLocation(): Promise<Location[] | []> {
     return this.LocationService.query();
   }
 }
