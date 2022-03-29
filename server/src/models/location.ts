@@ -24,7 +24,7 @@ export class Location {
   @Default(Date.now)
   dateCreation: Date = new Date();
 
-  @Ref(() => Store)
-  @CollectionOf(() => Store)
-  contracts?: Ref<Store>[];
+  // @Ref(() => Store)
+  // @CollectionOf(() => Store)
+  // contracts?: Ref<Store>[];
 }

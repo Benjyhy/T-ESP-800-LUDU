@@ -23,7 +23,7 @@ const mongoConfig = {
   ],
 };
 
-console.log(mongoConfig.mongoose[0].url)
+console.log(mongoConfig.mongoose[0].url);
 @Configuration({
   ...config,
   ...mongoConfig,
