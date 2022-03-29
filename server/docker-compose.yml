@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.3"
 services:
   server:
     build:
@@ -11,6 +11,15 @@ services:
     image: ludu-server/server:latest
     ports:
       - "8081:8081"
-    stdin_open: true  # -i
-    tty: true         # -t
+    stdin_open: true # -i
+    tty: true # -t
 
+  db:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ludu
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=ludu
