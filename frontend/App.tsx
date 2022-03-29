@@ -39,7 +39,7 @@ function ToggleDarkMode() {
                 aria-label={
                     colorMode === 'light'
                         ? 'switch to dark mode'
-                        : "switch to light mode"
+                        : 'switch to light mode'
                 }
             />
             <Text>Light</Text>
