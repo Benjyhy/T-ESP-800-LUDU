@@ -1,14 +1,25 @@
 # LUDU FRONTEND WITH EXPO
 
 /!\ You need an expo account to run the project  
-It provides you with a very useful **react native** environment.
-[Subscribe here](https://expo.dev/signup)
+It provides you with a very useful **react native** environment : [Subscribe here](https://expo.dev/signup)
 
 ## How to start ?
 
 1. Run 'npm install --global expo-cli' to get Expo
-2. Run 'expo login' to login to your account
-3. Run 'expo start' to make the project available online
+
+```sh
+  npm install --global expo-cli
+```
+2. Login to your account
+
+```sh
+  expo login
+```
+3. Make the project available on a test environment
+
+```sh
+  expo start
+```
 
 *Now, you can download the Expo app on your mobile or scan the QR code to launch it.*
 *You can run it in your browser too.*
@@ -23,7 +34,7 @@ It provides you with a very useful **react native** environment.
 ## Team Work
 
 Prettier and ESLint are configured so we can get along together.
-You can check the config in the *./.eslintrc.json* file
+You can check the config in the `./.eslintrc.json` file
 
 Every time you commit, the linter runs and warns you about code formatting errors. 
 Please fix it before committing again.
