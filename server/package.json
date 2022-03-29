@@ -12,6 +12,7 @@
     "test:coverage": "npm run test:unit",
     "test:lint": "eslint '**/*.{ts,js}'",
     "test:lint:fix": "eslint '**/*.{ts,js}' --fix",
+    "format": "prettier --write **/*.ts{,x}",
     "mongo": "./mongo.sh"
   },
   "dependencies": {
@@ -72,6 +73,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.5.1",
+    "prettier": "^2.6.1",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.7.0",

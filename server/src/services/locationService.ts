@@ -1,14 +1,13 @@
-import {Inject, Service} from "@tsed/common";
-import {MongooseModel} from "@tsed/mongoose";
-import {$log} from "@tsed/logger";
-import {Location} from "../models/location";
-
+import { Inject, Service } from "@tsed/common";
+import { MongooseModel } from "@tsed/mongoose";
+import { $log } from "@tsed/logger";
+import { Location } from "../models/location";
 
 @Service()
 export class LocationService {
-    @Inject(Location)
-    private Location: MongooseModel<Location>;
-/**
+  @Inject(Location)
+  private Location: MongooseModel<Location>;
+  /**
    * Find a location by his ID.
    * @param id
    * @returns {undefined|Location}
@@ -27,17 +26,14 @@ export class LocationService {
    * @returns {Promise<TResult|TResult2|Location>}
    */
   async save(location: Location): Promise<Location> {
-    $log.debug({message: "Validate location", location});
-
-    // const m = new CModel(location);
-    // console.log(m);
-    // await m.update(location, {upsert: true});
-
+    $log.debug({ message: "Validate location", location });
     const model = new this.Location(location);
-    $log.debug({message: "Save location", location});
-    await model.updateOne(location, {upsert: true});
+    await model.validate();
 
-    $log.debug({message: "Location saved", model});
+    $log.debug({ message: "Save location", location });
+    await model.updateOne(location, { upsert: true });
+
+    $log.debug({ message: "Location saved", model });
 
     return model;
   }
@@ -58,5 +54,4 @@ export class LocationService {
   async remove(id: string): Promise<Location> {
     return await this.Location.findById(id).deleteOne().exec();
   }
-
 }
