@@ -6,6 +6,7 @@ import {
   MaxLength,
   MinLength,
   Required,
+  Description
 } from "@tsed/schema";
 import { Model, ObjectID, Ref, Unique } from "@tsed/mongoose";
 
@@ -15,16 +16,19 @@ export class Location {
   _id: string;
 
   @Unique()
+  @Description("Name of the location")
   @Required()
   @MinLength(3)
   @MaxLength(50)
   name: string;
 
   @Format("date-time")
+  @Description("Date of location creation")
   @Default(Date.now)
   dateCreation: Date = new Date();
 
-  // @Ref(() => Store)
-  // @CollectionOf(() => Store)
-  // contracts?: Ref<Store>[];
+  @Description("Stores belonging  to this location")
+  @Ref(() => Store)
+  @CollectionOf(() => Store)
+  stores?: Ref<Store>[];
 }

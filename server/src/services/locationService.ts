@@ -43,7 +43,7 @@ export class LocationService {
    * @returns {Location[]}
    */
   async query(options = {}): Promise<Location[]> {
-    return this.Location.find(options).exec();
+    return this.Location.find(options).populate('stores').exec();
   }
 
   /**

@@ -31,7 +31,8 @@ export class StoreService {
     await model.validate();
 
     $log.debug({ message: "Save store", store });
-    await model.updateOne(store, { upsert: true });
+    console.log(store.location);
+    await model.updateOne(store, { upsert: true }).populate("locations").exec();
 
     $log.debug({ message: "Store saved", model });
 
