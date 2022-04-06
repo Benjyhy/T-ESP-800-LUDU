@@ -4,10 +4,13 @@ import {
   Get,
   Param,
   Post,
+  Put,
+  Delete,
   ValidationPipe,
 } from '@nestjs/common';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { StoreService } from './store.service';
-import { StoreDocument } from 'src/schemas/store.schema';
+import { StoreDocument, Store } from 'src/schemas/store.schema';
 import { StoreDto } from './dto/store.dto';
 
 @Controller('store')
@@ -33,5 +36,27 @@ export class StoreController {
     storeDto: StoreDto,
   ): Promise<StoreDocument> {
     return this.storeService.create(storeDto);
+  }
+
+  @Put('/:id')
+  @ApiOperation({ summary: 'Create a new location' })
+  @ApiOkResponse({ description: 'Success', type: Store })
+  update(
+    @Param('id')
+    id: string,
+    @Body(new ValidationPipe({ transform: true }))
+    locationDto: StoreDto,
+  ): Promise<StoreDocument> {
+    return this.storeService.update(id, locationDto);
+  }
+
+  @Delete('/:id')
+  @ApiOperation({ summary: 'Delete a location' })
+  @ApiOkResponse({ description: 'Success', type: Store })
+  async remove(
+    @Param('id')
+    id: string,
+  ): Promise<void> {
+    await this.storeService.remove(id);
   }
 }

@@ -4,6 +4,8 @@ import {
   Get,
   Param,
   Post,
+  Delete,
+  Put,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -41,5 +43,27 @@ export class LocationController {
     locationDto: LocationDto,
   ): Promise<LocationDocument> {
     return this.locationService.create(locationDto);
+  }
+
+  @Put('/:id')
+  @ApiOperation({ summary: 'Create a new location' })
+  @ApiOkResponse({ description: 'Success', type: Location })
+  update(
+    @Param('id')
+    id: string,
+    @Body(new ValidationPipe({ transform: true }))
+    locationDto: LocationDto,
+  ): Promise<LocationDocument> {
+    return this.locationService.update(id, locationDto);
+  }
+
+  @Delete('/:id')
+  @ApiOperation({ summary: 'Delete a location' })
+  @ApiOkResponse({ description: 'Success', type: Location })
+  async remove(
+    @Param('id')
+    id: string,
+  ): Promise<void> {
+    await this.locationService.remove(id);
   }
 }
