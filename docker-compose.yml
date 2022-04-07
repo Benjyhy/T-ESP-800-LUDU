@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    server:
+        container_name: nestjs_api
+        image: nestjs-api-prod:1.0.0
+        build:
+            context: ./server
+            target: production
+            dockerfile: ./Dockerfile
+        command: npm run start:prod
+        ports:
+            - 3000:3000
+        volumes:
+            - ./server:/usr/src/app
+        restart: unless-stopped
+        env_file: .env

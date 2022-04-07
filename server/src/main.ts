@@ -9,8 +9,7 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('IMPSDC PROJECT API')
-    .setDescription('The cats API description')
+    .setTitle('Ludu API')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
