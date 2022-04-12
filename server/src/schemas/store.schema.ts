@@ -10,16 +10,16 @@ export class Store {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
   @Prop({ unique: true })
   address: string;
 
-  @Prop()
+  @Prop({ required: true })
   owner: string;
 
-  @Prop()
+  @Prop({ required: true })
   phone: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Location' })

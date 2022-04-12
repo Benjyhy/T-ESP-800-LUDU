@@ -6,6 +6,9 @@ import { AppService } from './app.service';
 import appConfig from './config/app.config';
 import { LocationModule } from './modules/location/location.module';
 import { StoreModule } from './modules/store/store.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
+import { UserController } from './modules/user/user.controller';
 
 @Module({
   imports: [
@@ -18,8 +21,10 @@ import { StoreModule } from './modules/store/store.module';
     MongooseModule.forRoot(appConfig().database.url, {
       connectionName: 'mongo',
     }),
+    AuthModule,
+    UserModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}
