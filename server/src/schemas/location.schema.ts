@@ -10,7 +10,7 @@ export class Location {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
   @Prop({ type: [Types.ObjectId], ref: Store.name })
