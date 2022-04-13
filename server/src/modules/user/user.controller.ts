@@ -12,6 +12,7 @@ import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserDocument, User } from 'src/schemas/user.schema';
 import { UserDto } from './dto/user.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('user')
 export class UserController {
@@ -36,6 +37,14 @@ export class UserController {
     userDto: UserDto,
   ): Promise<UserDocument> {
     return this.userService.create(userDto);
+  }
+
+  @Post('/local/login')
+  login(
+    @Body(new ValidationPipe({ transform: true }))
+    userLogin: LoginDto,
+  ): Promise<boolean> {
+    return this.userService.login(userLogin);
   }
 
   @Put('/:id')

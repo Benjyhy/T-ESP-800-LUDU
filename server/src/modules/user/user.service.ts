@@ -4,6 +4,9 @@ import { Model, Types } from 'mongoose';
 import { StoreDocument } from 'src/schemas/store.schema';
 import { UserDocument } from 'src/schemas/user.schema';
 import { UserDto } from './dto/user.dto';
+import { LoginDto } from './dto/login.dto';
+import { Credentials } from '../../schemas/user.schema';
+import { comparePassword } from 'src/helpers/bcrypt';
 
 @Injectable()
 export class UserService {
@@ -22,8 +25,7 @@ export class UserService {
 
   async create(UserDto: UserDto): Promise<UserDocument> {
     const createdUser = await this.userModel.create(UserDto);
-
-    return createdUser;
+    return await this.userModel.findById(createdUser._id).exec();
   }
 
   public async update(
@@ -46,5 +48,19 @@ export class UserService {
     if (!isUser) throw new NotFoundException(`User #${id} not found`);
 
     return isUser;
+  }
+
+  public async login(userLogin: LoginDto): Promise<boolean> {
+    const userPassword = await this.userModel
+      .findOne({ username: userLogin.username })
+      .select('credentials.local.password');
+
+    if (!userPassword)
+      throw new NotFoundException(`User #${userLogin.username} not found`);
+
+    return comparePassword(
+      userLogin.password,
+      userPassword.credentials.local.password,
+    );
   }
 }
