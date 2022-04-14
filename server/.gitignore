@@ -1,4 +1,7 @@
 .env
+jwt.private.key
+jwt.key.pub
+
 # compiled output
 /dist
 /node_modules

@@ -3,21 +3,23 @@ import {
   Controller,
   Get,
   Param,
-  Post,
   Put,
   Delete,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserDocument, User } from 'src/schemas/user.schema';
 import { UserDto } from './dto/user.dto';
-import { LoginDto } from './dto/login.dto';
+import { LoginDto } from '../auth/dto/login.dto';
+import { JwtAuthGuard } from 'src/middlewares/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get('')
   findAll(): Promise<UserDocument[]> {
     return this.userService.findAll();
@@ -29,22 +31,6 @@ export class UserController {
     id: string,
   ): Promise<UserDocument> {
     return this.userService.findById(id);
-  }
-
-  @Post('')
-  create(
-    @Body(new ValidationPipe({ transform: true }))
-    userDto: UserDto,
-  ): Promise<UserDocument> {
-    return this.userService.create(userDto);
-  }
-
-  @Post('/local/login')
-  login(
-    @Body(new ValidationPipe({ transform: true }))
-    userLogin: LoginDto,
-  ): Promise<boolean> {
-    return this.userService.login(userLogin);
   }
 
   @Put('/:id')
