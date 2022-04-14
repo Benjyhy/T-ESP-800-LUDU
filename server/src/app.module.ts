@@ -16,11 +16,11 @@ import { UserController } from './modules/user/user.controller';
       isGlobal: true,
       load: [appConfig],
     }),
-    LocationModule,
-    StoreModule,
     MongooseModule.forRoot(appConfig().database.url, {
       connectionName: 'mongo',
     }),
+    LocationModule,
+    StoreModule,
     AuthModule,
     UserModule,
   ],

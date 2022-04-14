@@ -8,6 +8,7 @@ import { hashPassword } from 'src/helpers/bcrypt';
 import { UserDto } from './dto/user.dto';
 
 @Module({
+  providers: [UserService],
   imports: [
     MongooseModule.forFeatureAsync(
       [
@@ -41,7 +42,6 @@ import { UserDto } from './dto/user.dto';
     ),
   ],
   controllers: [UserController],
-  providers: [UserService],
   exports: [UserService],
 })
 export class UserModule {}

@@ -15,8 +15,8 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class OAuth {
-  @Prop({ required: true })
-  id: string;
+  // @Prop()
+  // id: string;
 
   @Prop()
   token: string;
@@ -31,15 +31,25 @@ export const OAuthSchema = SchemaFactory.createForClass(OAuth);
 
 @Schema()
 export class LocalAuth {
-  @Prop()
+  @Prop({ unique: true })
   email: string;
 
-  @Exclude({ toPlainOnly: true })
-  @Prop()
+  @Prop({
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 6,
+    select: false,
+  })
+  @Exclude()
   password: string;
 
   @Prop()
   emailVerified: string;
+
+  constructor(partial: Partial<LocalAuth>) {
+    Object.assign(this, partial);
+  }
 }
 export const LocalSchema = SchemaFactory.createForClass(LocalAuth);
 

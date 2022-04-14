@@ -2,19 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
 
-export interface ILocal {
-  email: string;
-  password: string;
-  emailVerified: boolean;
-}
-
-export class LocaDto {
+export class LoginDto {
   @IsString()
-  readonly email: string;
+  readonly username: string;
 
   @IsString()
   readonly password: string;
-
-  @IsString()
-  readonly emailVerified: boolean;
 }
