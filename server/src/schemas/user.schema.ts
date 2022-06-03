@@ -1,9 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { ObjectId } from 'mongoose';
 import { Exclude, Transform } from 'class-transformer';
-import { IOAuth } from '../modules/user/dto/oauth.dto';
-import { ILocal } from '../modules/user/dto/local.dto';
-import { ICredentials } from '../modules/user/dto/user.dto';
+import { hashPassword } from 'src/helpers/bcrypt';
 
 export enum ROLES {
   OWNER,
@@ -13,11 +11,7 @@ export enum ROLES {
 
 export type UserDocument = User & Document;
 
-@Schema()
-export class OAuth {
-  // @Prop()
-  // id: string;
-
+export class Oauth {
   @Prop()
   token: string;
 
@@ -27,11 +21,9 @@ export class OAuth {
   @Prop()
   name: string;
 }
-export const OAuthSchema = SchemaFactory.createForClass(OAuth);
 
-@Schema()
 export class LocalAuth {
-  @Prop({ unique: true })
+  @Prop()
   email: string;
 
   @Prop({
@@ -46,37 +38,29 @@ export class LocalAuth {
 
   @Prop()
   emailVerified: string;
-
-  constructor(partial: Partial<LocalAuth>) {
-    Object.assign(this, partial);
-  }
 }
-export const LocalSchema = SchemaFactory.createForClass(LocalAuth);
 
-@Schema()
 export class Credentials {
   @Prop({ type: LocalAuth })
-  local: ILocal;
+  local: LocalAuth;
 
-  @Prop({ type: OAuth })
-  oauth: IOAuth;
+  @Prop({ type: Oauth })
+  oauth: Oauth;
 }
-export const CredentialsSchema = SchemaFactory.createForClass(Credentials);
 
 @Schema({ timestamps: true })
 export class User {
   @Transform(({ value }) => value.toString())
   _id: ObjectId;
 
-  // @Prop()
-  // role: [ROLES];
-
   @Prop({ unique: true, required: true })
   username: string;
 
-  // Single example
-  @Prop({ type: CredentialsSchema })
-  credentials: ICredentials;
+  @Prop({ type: Credentials })
+  credentials: Credentials;
+
+  // @Prop()
+  // role: [ROLES];
 
   // @Prop({ required: true })
   // phone: number;
@@ -95,3 +79,14 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.pre<UserDocument>('save', function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  if (user.credentials.local.password) {
+    this.credentials.local.password = hashPassword(
+      this.credentials.local.password,
+    );
+  }
+  next();
+});

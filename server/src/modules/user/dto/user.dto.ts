@@ -3,13 +3,13 @@ import { Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
 import { ROLES } from 'src/schemas/user.schema';
 
-import { IOAuth } from './oauth.dto';
-import { ILocal } from './local.dto';
+import { OauthDto } from './oauth.dto';
+import { LocalDto } from './local.dto';
 
-export type ICredentials = {
-  oauth: IOAuth;
-  local: ILocal;
-};
+interface ICredentials {
+  local: LocalDto;
+  oauth: OauthDto;
+}
 
 export class UserDto {
   @Transform(({ value }) => value.toString())

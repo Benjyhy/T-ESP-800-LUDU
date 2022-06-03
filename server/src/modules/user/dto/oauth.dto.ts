@@ -2,14 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsString, IsNumber } from 'class-validator';
 
-export interface IOAuth {
-  id: number;
-  token: string;
-  email: string;
-  name: string;
-}
-
-export class IOAuth {
+export class OauthDto {
   @Transform(({ value }) => value.toString())
   @IsNumber()
   id: number;
@@ -22,4 +15,7 @@ export class IOAuth {
 
   @IsString()
   name: string;
+
+  @IsString()
+  password: string;
 }
